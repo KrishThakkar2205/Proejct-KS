@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
@@ -73,8 +74,8 @@ const InfluencerProfile = () => {
                             >
                                 Copy Link
                             </Button>
-                            <a
-                                href={`/portfolio/${formData.name.toLowerCase().replace(/\s+/g, '-')}`}
+                            <Link
+                                to={`/portfolio/${formData.name.toLowerCase().replace(/\s+/g, '-')}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex-1"
@@ -86,7 +87,7 @@ const InfluencerProfile = () => {
                                 >
                                     View
                                 </Button>
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </Card>
@@ -256,8 +257,8 @@ const InfluencerProfile = () => {
                                 >
                                     Copy Link
                                 </Button>
-                                <a
-                                    href={`/portfolio/${formData.name.toLowerCase().replace(/\s+/g, '-')}`}
+                                <Link
+                                    to={`/portfolio/${formData.name.toLowerCase().replace(/\s+/g, '-')}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex-1"
@@ -269,7 +270,7 @@ const InfluencerProfile = () => {
                                     >
                                         View
                                     </Button>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </Card>

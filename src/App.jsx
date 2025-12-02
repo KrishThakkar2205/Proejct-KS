@@ -31,8 +31,11 @@ function App() {
                     <Route path="/" element={<LandingPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/signup" element={<SignupPage />} />
-                    <Route path="/portfolio/:username" element={<PublicPortfolio />} />
+                    <Route path="/signup" element={<SignupPage />} />
                 </Route>
+
+                {/* Portfolio Route */}
+                <Route path="/portfolio/:username" element={<PublicPortfolio />} />
 
                 {/* Dashboard Routes */}
                 <Route path="/brand" element={<DashboardLayout />}>
