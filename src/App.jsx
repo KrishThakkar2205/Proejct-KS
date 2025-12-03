@@ -15,7 +15,7 @@ import InfluencerLayout from './layouts/InfluencerLayout';
 import InfluencerDashboard from './pages/influencer/InfluencerDashboard';
 import InfluencerProfilePage from './pages/influencer/InfluencerProfile';
 import ShootingCalendar from './pages/influencer/ShootingCalendar';
-import Bookings from './pages/influencer/Bookings';
+import Schedule from './pages/influencer/Schedule';
 import InfluencerMessages from './pages/influencer/InfluencerMessages';
 import PlaceholderPage from './pages/PlaceholderPage';
 import NotFound from './pages/NotFound';
@@ -53,7 +53,7 @@ function App() {
                     <Route index element={<InfluencerDashboard />} />
                     <Route path="profile" element={<InfluencerProfilePage />} />
                     <Route path="calendar" element={<ShootingCalendar />} />
-                    <Route path="bookings" element={<Bookings />} />
+                    <Route path="schedule" element={<Schedule />} />
                     <Route path="messages" element={<InfluencerMessages />} />
                 </Route>
 

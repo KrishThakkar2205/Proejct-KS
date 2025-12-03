@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, User, Calendar, Briefcase, MessageSquare, Bell, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, User, Calendar, ClipboardList, MessageSquare, Bell, LogOut, Menu, X } from 'lucide-react';
 
 const InfluencerLayout = () => {
     const location = useLocation();
@@ -11,7 +11,7 @@ const InfluencerLayout = () => {
         { icon: <LayoutDashboard size={20} />, label: 'Dashboard', path: '/influencer' },
         { icon: <User size={20} />, label: 'Profile', path: '/influencer/profile' },
         { icon: <Calendar size={20} />, label: 'Calendar', path: '/influencer/calendar' },
-        { icon: <Briefcase size={20} />, label: 'Bookings', path: '/influencer/bookings' },
+        { icon: <ClipboardList size={20} />, label: 'Schedule', path: '/influencer/schedule' },
     ];
 
     const SidebarContent = () => (
@@ -96,8 +96,8 @@ const InfluencerLayout = () => {
                     </div>
                 </button>
 
-                {/* Top Header - Fixed */}
-                <header className="fixed top-0 left-0 md:left-64 right-0 bg-white border-b border-gray-200 h-16 flex items-center justify-between px-6 shadow-sm z-40">
+                {/* Top Header */}
+                <header className="bg-white border-b border-gray-200 h-16 flex items-center justify-between px-6 shadow-sm z-40 flex-shrink-0">
                     <div className="flex items-center gap-4">
                         <Link to="/influencer/profile" className="md:pointer-events-none">
                             <h1 className="flex items-center gap-1 cursor-pointer md:cursor-default">
@@ -132,7 +132,7 @@ const InfluencerLayout = () => {
                 </header>
 
                 {/* Main Content */}
-                <main className="flex-1 overflow-y-auto p-6 bg-gray-50/50 pt-[88px]">
+                <main className="flex-1 overflow-y-auto p-6 bg-gray-50/50">
                     <Outlet />
                 </main>
             </div>

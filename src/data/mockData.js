@@ -308,5 +308,159 @@ export const MOCK_INFLUENCER_DATA = {
         unavailableDates: ['2025-12-01', '2025-12-15', '2025-12-25'],
         // Booked dates (from bookings)
         bookedDates: ['2025-12-05', '2025-12-12', '2025-12-20']
-    }
+    },
+
+    uploadSchedule: [
+        // Today's uploads (Dec 2, 2025)
+        {
+            id: 1,
+            brandName: 'EcoWear Fashion',
+            campaign: 'Sustainable Summer Collection',
+            platform: 'Instagram',
+            uploadDate: '2025-12-02',
+            uploadTime: '6:00 PM',
+            contentType: 'Reel',
+            status: 'pending',
+            notes: 'Use hashtags: #SustainableFashion #EcoWear',
+            shootDate: '2025-12-01'
+        },
+        {
+            id: 2,
+            brandName: 'GreenBeauty Co',
+            campaign: 'Natural Skincare Launch',
+            platform: 'Instagram',
+            uploadDate: '2025-12-02',
+            uploadTime: '8:00 PM',
+            contentType: 'Post + Story',
+            status: 'pending',
+            notes: 'Tag @greenbeautyco',
+            shootDate: '2025-12-01'
+        },
+        {
+            id: 3,
+            brandName: 'UrbanStyle Co',
+            campaign: 'Street Fashion Winter',
+            platform: 'YouTube',
+            uploadDate: '2025-12-02',
+            uploadTime: '12:00 PM',
+            contentType: 'Short',
+            status: 'uploaded',
+            notes: 'Include product links in description',
+            shootDate: '2025-12-01'
+        },
+        // Dec 3, 2025
+        {
+            id: 4,
+            brandName: 'LuxeAccessories',
+            campaign: 'Holiday Jewelry Line',
+            platform: 'Instagram',
+            uploadDate: '2025-12-03',
+            uploadTime: '5:00 PM',
+            contentType: 'Carousel Post',
+            status: 'pending',
+            notes: 'Show all 5 pieces',
+            shootDate: '2025-12-02'
+        },
+        {
+            id: 5,
+            brandName: 'FitLife Nutrition',
+            campaign: 'Protein Shake Promo',
+            platform: 'TikTok',
+            uploadDate: '2025-12-03',
+            uploadTime: '7:00 PM',
+            contentType: 'Video',
+            status: 'pending',
+            notes: 'Use trending audio',
+            shootDate: '2025-12-02'
+        },
+        // Dec 5, 2025 - Upload only (no shoot)
+        {
+            id: 6,
+            brandName: 'BeautyGlow',
+            campaign: 'Winter Skincare Routine',
+            platform: 'Instagram',
+            uploadDate: '2025-12-05',
+            uploadTime: '4:00 PM',
+            contentType: 'Reel',
+            status: 'pending',
+            notes: 'Add product links in bio',
+            shootDate: '2025-11-28'
+        },
+        {
+            id: 7,
+            brandName: 'TechReview Pro',
+            campaign: 'Gadget Unboxing',
+            platform: 'YouTube',
+            uploadDate: '2025-12-05',
+            uploadTime: '6:30 PM',
+            contentType: 'Video',
+            status: 'pending',
+            notes: 'Include affiliate links',
+            shootDate: '2025-11-29'
+        },
+        // Dec 7, 2025 - Upload only (no shoot)
+        {
+            id: 8,
+            brandName: 'FashionForward',
+            campaign: 'Holiday Lookbook',
+            platform: 'Instagram',
+            uploadDate: '2025-12-07',
+            uploadTime: '5:00 PM',
+            contentType: 'Carousel Post',
+            status: 'pending',
+            notes: 'Tag all outfit pieces',
+            shootDate: '2025-11-30'
+        },
+        // Dec 10, 2025 - Upload only (no shoot)
+        {
+            id: 9,
+            brandName: 'HomeDecor Studio',
+            campaign: 'Cozy Winter Vibes',
+            platform: 'TikTok',
+            uploadDate: '2025-12-10',
+            uploadTime: '3:00 PM',
+            contentType: 'Video',
+            status: 'pending',
+            notes: 'Use trending sound #cozyhome',
+            shootDate: '2025-12-01'
+        },
+        {
+            id: 10,
+            brandName: 'FitnessHub',
+            campaign: 'Morning Workout Routine',
+            platform: 'Instagram',
+            uploadDate: '2025-12-10',
+            uploadTime: '7:00 AM',
+            contentType: 'Reel',
+            status: 'pending',
+            notes: 'Post early for engagement',
+            shootDate: '2025-12-02'
+        },
+        // Dec 15, 2025 - Upload only (no shoot)
+        {
+            id: 11,
+            brandName: 'TravelBug Co',
+            campaign: 'Weekend Getaway Guide',
+            platform: 'YouTube',
+            uploadDate: '2025-12-15',
+            uploadTime: '12:00 PM',
+            contentType: 'Vlog',
+            status: 'pending',
+            notes: 'Include travel tips in description',
+            shootDate: '2025-12-08'
+        },
+        // Dec 18, 2025 - Upload only (no shoot)
+        {
+            id: 12,
+            brandName: 'CoffeeLovers',
+            campaign: 'Holiday Coffee Recipes',
+            platform: 'Instagram',
+            uploadDate: '2025-12-18',
+            uploadTime: '9:00 AM',
+            contentType: 'Reel',
+            status: 'pending',
+            notes: 'Share recipe in caption',
+            shootDate: '2025-12-10'
+        }
+    ]
 };

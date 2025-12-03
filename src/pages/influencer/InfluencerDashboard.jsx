@@ -69,12 +69,12 @@ const InfluencerDashboard = () => {
                 </div>
 
                 {/* Platform Selector */}
-                <div className="flex gap-2 mb-6 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
+                <div className="flex flex-wrap gap-2 mb-6">
                     {['instagram', 'facebook', 'youtube'].map((platform) => (
                         <button
                             key={platform}
                             onClick={() => setSelectedPlatform(platform)}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${selectedPlatform === platform
+                            className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${selectedPlatform === platform
                                 ? 'bg-primary-orange text-white shadow-md'
                                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                 }`}

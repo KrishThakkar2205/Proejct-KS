@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import Card from '../../components/ui/Card';
 import Badge from '../../components/ui/Badge';
-import { Instagram, Facebook, Youtube, MapPin, TrendingUp, Users, Heart, MessageCircle, Eye, X } from 'lucide-react';
+import { Instagram, Facebook, Youtube, MapPin, TrendingUp, Users, Heart, MessageCircle, Eye, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { MOCK_INFLUENCER_DATA } from '../../data/mockData';
 
 const PublicPortfolio = () => {
@@ -386,118 +386,158 @@ const PublicPortfolio = () => {
                     onClick={closeMediaModal}
                 >
                     <div
-                        className={`bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto relative ${isClosing ? 'animate-popup-exit' : 'animate-popup'}`}
+                        className={`bg-white rounded-lg w-full max-w-2xl lg:max-w-6xl max-h-[90vh] lg:h-[85vh] overflow-hidden relative flex flex-col lg:flex-row ${isClosing ? 'animate-popup-exit' : 'animate-popup'}`}
                         onClick={(e) => e.stopPropagation()}
                         onTouchStart={onTouchStart}
                         onTouchMove={onTouchMove}
                         onTouchEnd={onTouchEnd}
                     >
-                        {/* Modal Header */}
-                        <div className="flex items-center justify-between p-6 border-b">
-                            <div className="flex items-center gap-3">
-                                {selectedMedia.platform === 'instagram' ? (
-                                    <Instagram size={24} className="text-pink-600" />
-                                ) : (
-                                    <Youtube size={24} className="text-red-600" />
-                                )}
-                                <h3 className="text-xl font-bebas tracking-wide text-deep-black">
-                                    {selectedMedia.platform === 'instagram' ? 'Instagram Post' : 'YouTube Video'}
-                                </h3>
-                            </div>
+                        {/* Left Side - Media (Desktop) */}
+                        <div className="hidden lg:flex lg:w-3/5 bg-gray-100 items-center justify-center relative h-full">
+                            {/* Navigation Buttons */}
                             <button
-                                onClick={closeMediaModal}
-                                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                                onClick={(e) => { e.stopPropagation(); handlePrev(); }}
+                                className="absolute left-4 p-2 bg-white/80 hover:bg-white rounded-full text-deep-black transition-all z-10"
+                                disabled={currentIndex === 0}
                             >
-                                <X size={24} />
+                                <ChevronLeft size={24} />
                             </button>
-                        </div>
+                            <button
+                                onClick={(e) => { e.stopPropagation(); handleNext(); }}
+                                className="absolute right-4 p-2 bg-white/80 hover:bg-white rounded-full text-deep-black transition-all z-10"
+                                disabled={
+                                    currentIndex === (selectedMedia.platform === 'instagram'
+                                        ? socialMedia?.instagram?.recentPosts.length
+                                        : socialMedia?.youtube?.recentVideos.length) - 1
+                                }
+                            >
+                                <ChevronRight size={24} />
+                            </button>
 
-                        {/* Modal Content */}
-                        <div
-                            key={currentIndex}
-                            className={`p-6 ${slideDirection === 'right' ? 'animate-slide-in-right' : 'animate-slide-in-left'}`}
-                        >
                             {/* Media Preview */}
-                            <div className={`w-full aspect-square rounded-lg flex items-center justify-center mb-6 transition-all duration-300 ${selectedMedia.platform === 'instagram'
+                            <div className={`w-full h-full flex items-center justify-center ${selectedMedia.platform === 'instagram'
                                 ? 'bg-gradient-to-br from-pink-200 to-orange-200'
                                 : 'bg-gradient-to-br from-red-200 to-orange-200'
                                 }`}>
                                 {selectedMedia.platform === 'instagram' ? (
-                                    <Instagram size={64} className="text-white opacity-50" />
+                                    <Instagram size={80} className="text-white opacity-50" />
                                 ) : (
-                                    <Youtube size={64} className="text-white opacity-50" />
+                                    <Youtube size={80} className="text-white opacity-50" />
                                 )}
                             </div>
+                        </div>
 
-                            {/* Dots Indicator */}
-                            <div className="flex justify-center gap-2 mb-6">
-                                {(selectedMedia.platform === 'instagram' ? socialMedia?.instagram?.recentPosts : socialMedia?.youtube?.recentVideos)?.map((_, idx) => (
-                                    <div
-                                        key={idx}
-                                        className={`w-2 h-2 rounded-full transition-all duration-300 ${idx === currentIndex ? 'bg-primary-orange w-4' : 'bg-gray-300'}`}
-                                    />
-                                ))}
+                        {/* Right Side - Content */}
+                        <div className="flex-1 flex flex-col h-full overflow-hidden">
+                            {/* Modal Header */}
+                            <div className="flex items-center justify-between p-6 border-b flex-shrink-0">
+                                <div className="flex items-center gap-3">
+                                    {selectedMedia.platform === 'instagram' ? (
+                                        <Instagram size={24} className="text-pink-600" />
+                                    ) : (
+                                        <Youtube size={24} className="text-red-600" />
+                                    )}
+                                    <h3 className="text-xl font-bebas tracking-wide text-deep-black">
+                                        {selectedMedia.platform === 'instagram' ? 'Instagram Post' : 'YouTube Video'}
+                                    </h3>
+                                </div>
+                                <button
+                                    onClick={closeMediaModal}
+                                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                                >
+                                    <X size={24} />
+                                </button>
                             </div>
 
-                            {/* Media Info */}
-                            <div className="space-y-4">
-                                <div>
-                                    <p className="text-sm text-gray-500 mb-1">Published Date</p>
-                                    <p className="text-lg font-semibold text-deep-black">
-                                        {new Date(selectedMedia.date).toLocaleDateString('en-US', {
-                                            weekday: 'long',
-                                            year: 'numeric',
-                                            month: 'long',
-                                            day: 'numeric'
-                                        })}
-                                    </p>
-                                </div>
+                            {/* Scrollable Content */}
+                            <div className="flex-1 overflow-y-auto p-6">
+                                <div
+                                    key={currentIndex}
+                                    className={`${slideDirection === 'right' ? 'animate-slide-in-right' : 'animate-slide-in-left'}`}
+                                >
+                                    {/* Mobile Media Preview (Hidden on Desktop) */}
+                                    <div className={`lg:hidden w-full aspect-square rounded-lg flex items-center justify-center mb-6 transition-all duration-300 ${selectedMedia.platform === 'instagram'
+                                        ? 'bg-gradient-to-br from-pink-200 to-orange-200'
+                                        : 'bg-gradient-to-br from-red-200 to-orange-200'
+                                        }`}>
+                                        {selectedMedia.platform === 'instagram' ? (
+                                            <Instagram size={64} className="text-white opacity-50" />
+                                        ) : (
+                                            <Youtube size={64} className="text-white opacity-50" />
+                                        )}
+                                    </div>
 
-                                {/* Metrics */}
-                                <div className="grid grid-cols-3 gap-4">
-                                    <div className="p-4 bg-gray-50 rounded-lg">
-                                        <div className="flex items-center gap-2 mb-1">
-                                            <Eye size={16} className="text-gray-600" />
-                                            <p className="text-sm text-gray-600">Views</p>
+                                    {/* Dots Indicator (Mobile Only) */}
+                                    <div className="lg:hidden flex justify-center gap-2 mb-6">
+                                        {(selectedMedia.platform === 'instagram' ? socialMedia?.instagram?.recentPosts : socialMedia?.youtube?.recentVideos)?.map((_, idx) => (
+                                            <div
+                                                key={idx}
+                                                className={`w-2 h-2 rounded-full transition-all duration-300 ${idx === currentIndex ? 'bg-primary-orange w-4' : 'bg-gray-300'}`}
+                                            />
+                                        ))}
+                                    </div>
+
+                                    {/* Media Info */}
+                                    <div className="space-y-4">
+                                        <div>
+                                            <p className="text-sm text-gray-500 mb-1">Published Date</p>
+                                            <p className="text-lg font-semibold text-deep-black">
+                                                {new Date(selectedMedia.date).toLocaleDateString('en-US', {
+                                                    weekday: 'long',
+                                                    year: 'numeric',
+                                                    month: 'long',
+                                                    day: 'numeric'
+                                                })}
+                                            </p>
                                         </div>
-                                        <p className="text-2xl font-bebas text-deep-black">
-                                            {selectedMedia.views ? selectedMedia.views.toLocaleString() : 'N/A'}
+
+                                        {/* Metrics */}
+                                        <div className="grid grid-cols-3 gap-4">
+                                            <div className="p-4 bg-gray-50 rounded-lg">
+                                                <div className="flex items-center gap-2 mb-1">
+                                                    <Eye size={16} className="text-gray-600" />
+                                                    <p className="text-sm text-gray-600">Views</p>
+                                                </div>
+                                                <p className="text-2xl font-bebas text-deep-black">
+                                                    {selectedMedia.views ? selectedMedia.views.toLocaleString() : 'N/A'}
+                                                </p>
+                                            </div>
+                                            <div className={`p-4 rounded-lg ${selectedMedia.platform === 'instagram' ? 'bg-pink-50' : 'bg-red-50'}`}>
+                                                <div className="flex items-center gap-2 mb-1">
+                                                    <Heart size={16} className={selectedMedia.platform === 'instagram' ? 'text-pink-600' : 'text-red-600'} />
+                                                    <p className="text-sm text-gray-600">Likes</p>
+                                                </div>
+                                                <p className="text-2xl font-bebas text-deep-black">
+                                                    {selectedMedia.likes.toLocaleString()}
+                                                </p>
+                                            </div>
+                                            <div className="p-4 bg-blue-50 rounded-lg">
+                                                <div className="flex items-center gap-2 mb-1">
+                                                    <MessageCircle size={16} className="text-blue-600" />
+                                                    <p className="text-sm text-gray-600">Comments</p>
+                                                </div>
+                                                <p className="text-2xl font-bebas text-deep-black">
+                                                    {selectedMedia.comments}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        {/* Engagement Rate */}
+                                        <div className="p-4 bg-gradient-to-r from-orange-50 to-orange-100 rounded-lg border-2 border-primary-orange">
+                                            <p className="text-sm text-gray-600 mb-1">Engagement Rate</p>
+                                            <p className="text-3xl font-bebas text-primary-orange">
+                                                {selectedMedia.platform === 'youtube'
+                                                    ? ((selectedMedia.likes + selectedMedia.comments) / (selectedMedia.views || 1) * 100).toFixed(2)
+                                                    : ((selectedMedia.likes + selectedMedia.comments) / (socialMedia?.instagram?.followers || 1) * 100).toFixed(2)
+                                                }%
+                                            </p>
+                                        </div>
+
+                                        <p className="text-sm text-gray-500 text-center mt-4">
+                                            * When connected to API, actual media content will be displayed here
                                         </p>
                                     </div>
-                                    <div className={`p-4 rounded-lg ${selectedMedia.platform === 'instagram' ? 'bg-pink-50' : 'bg-red-50'}`}>
-                                        <div className="flex items-center gap-2 mb-1">
-                                            <Heart size={16} className={selectedMedia.platform === 'instagram' ? 'text-pink-600' : 'text-red-600'} />
-                                            <p className="text-sm text-gray-600">Likes</p>
-                                        </div>
-                                        <p className="text-2xl font-bebas text-deep-black">
-                                            {selectedMedia.likes.toLocaleString()}
-                                        </p>
-                                    </div>
-                                    <div className="p-4 bg-blue-50 rounded-lg">
-                                        <div className="flex items-center gap-2 mb-1">
-                                            <MessageCircle size={16} className="text-blue-600" />
-                                            <p className="text-sm text-gray-600">Comments</p>
-                                        </div>
-                                        <p className="text-2xl font-bebas text-deep-black">
-                                            {selectedMedia.comments}
-                                        </p>
-                                    </div>
                                 </div>
-
-                                {/* Engagement Rate */}
-                                <div className="p-4 bg-gradient-to-r from-orange-50 to-orange-100 rounded-lg border-2 border-primary-orange">
-                                    <p className="text-sm text-gray-600 mb-1">Engagement Rate</p>
-                                    <p className="text-3xl font-bebas text-primary-orange">
-                                        {selectedMedia.platform === 'youtube'
-                                            ? ((selectedMedia.likes + selectedMedia.comments) / (selectedMedia.views || 1) * 100).toFixed(2)
-                                            : ((selectedMedia.likes + selectedMedia.comments) / (socialMedia?.instagram?.followers || 1) * 100).toFixed(2)
-                                        }%
-                                    </p>
-                                </div>
-
-                                <p className="text-sm text-gray-500 text-center mt-4">
-                                    * When connected to API, actual media content will be displayed here
-                                </p>
                             </div>
                         </div>
                     </div>
