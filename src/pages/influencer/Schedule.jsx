@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import Card from '../../components/ui/Card';
 import Badge from '../../components/ui/Badge';
 import Button from '../../components/ui/Button';
-import { Calendar, Clock, MapPin, Search, Upload, Video } from 'lucide-react';
+import { Calendar, Clock, MapPin, Search, Upload, Video, X } from 'lucide-react';
 import { MOCK_INFLUENCER_DATA } from '../../data/mockData';
 
 const Schedule = () => {
     const [activeTab, setActiveTab] = useState('shoots');
     const [searchQuery, setSearchQuery] = useState('');
+    const [completedShoots, setCompletedShoots] = useState(new Set());
+    const [completedUploads, setCompletedUploads] = useState(new Set());
+    const [selectedShoot, setSelectedShoot] = useState(null);
+    const [isModalClosing, setIsModalClosing] = useState(false);
     const { bookings, uploadSchedule } = MOCK_INFLUENCER_DATA;
 
     // Get today's date string
@@ -33,6 +38,37 @@ const Schedule = () => {
 
     const todaysShoot = getTodaysShoot();
     const todaysUploads = getTodaysUploads();
+
+    // Handler for marking shoot as completed
+    const handleMarkShootComplete = (shootId) => {
+        setCompletedShoots(prev => {
+            const newSet = new Set(prev);
+            newSet.add(shootId);
+            return newSet;
+        });
+    };
+
+    // Handler for marking upload as completed
+    const handleMarkUploadComplete = (uploadId) => {
+        setCompletedUploads(prev => {
+            const newSet = new Set(prev);
+            newSet.add(uploadId);
+            return newSet;
+        });
+    };
+
+    // Modal handlers
+    const openShootModal = (shoot) => {
+        setSelectedShoot(shoot);
+    };
+
+    const closeShootModal = () => {
+        setIsModalClosing(true);
+        setTimeout(() => {
+            setSelectedShoot(null);
+            setIsModalClosing(false);
+        }, 300); // Match animation duration
+    };
 
     // Filter shoots by search
     const filterShoot = () => {
@@ -189,8 +225,22 @@ const Schedule = () => {
                                 )}
 
                                 <div className="flex flex-col sm:flex-row gap-2">
-                                    <Button variant="secondary" size="sm" className="flex-1 w-full sm:w-auto">
+                                    <Button
+                                        variant="secondary"
+                                        size="sm"
+                                        className="flex-1 w-full sm:w-auto"
+                                        onClick={() => openShootModal(booking)}
+                                    >
                                         View Details
+                                    </Button>
+                                    <Button
+                                        variant={completedShoots.has(booking.id) ? "outline" : "primary"}
+                                        size="sm"
+                                        className="flex-1 w-full sm:w-auto"
+                                        onClick={() => handleMarkShootComplete(booking.id)}
+                                        disabled={completedShoots.has(booking.id)}
+                                    >
+                                        {completedShoots.has(booking.id) ? 'Done' : 'Mark as Completed'}
                                     </Button>
                                 </div>
                             </Card>
@@ -249,18 +299,16 @@ const Schedule = () => {
                                 )}
 
                                 <div className="flex flex-col sm:flex-row gap-2">
+
                                     <Button
-                                        variant={upload.status === 'uploaded' ? 'secondary' : 'primary'}
+                                        variant={completedUploads.has(upload.id) ? "outline" : "primary"}
                                         size="sm"
                                         className="flex-1 w-full sm:w-auto"
+                                        onClick={() => handleMarkUploadComplete(upload.id)}
+                                        disabled={completedUploads.has(upload.id)}
                                     >
-                                        {upload.status === 'uploaded' ? 'View Post' : 'Upload Now'}
+                                        {completedUploads.has(upload.id) ? 'Done' : 'Mark as Completed'}
                                     </Button>
-                                    {upload.status === 'pending' && (
-                                        <Button variant="outline" size="sm" className="flex-1 w-full sm:w-auto">
-                                            Mark as Done
-                                        </Button>
-                                    )}
                                 </div>
                             </Card>
                         ))
@@ -276,6 +324,112 @@ const Schedule = () => {
                         </Card>
                     )}
                 </div>
+            )}
+
+            {/* Shoot Details Modal */}
+            {selectedShoot && createPortal(
+                <div
+                    className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4 ${isModalClosing ? 'animate-backdrop-exit' : 'animate-fadeIn'}`}
+                    style={{ backdropFilter: 'blur(4px)' }}
+                    onClick={closeShootModal}
+                >
+                    <Card
+                        className={`w-[95%] md:w-full max-w-2xl max-h-[85vh] overflow-y-auto ${isModalClosing ? 'animate-popup-exit' : 'animate-scaleIn'}`}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="p-6">
+                            {/* Modal Header */}
+                            <div className="flex items-start justify-between mb-6">
+                                <div className="flex items-start gap-4">
+                                    <div className="w-16 h-16 bg-gray-200 rounded-lg flex-shrink-0" />
+                                    <div>
+                                        <h2 className="text-2xl font-bebas tracking-wide text-deep-black mb-1">
+                                            {selectedShoot.brandName}
+                                        </h2>
+                                        <p className="text-gray-600">{selectedShoot.campaign}</p>
+                                        <Badge variant={getStatusVariant(selectedShoot.status)} className="mt-2">
+                                            {selectedShoot.status}
+                                        </Badge>
+                                    </div>
+                                </div>
+                                <button
+                                    onClick={closeShootModal}
+                                    className="text-gray-400 hover:text-gray-600 transition-colors"
+                                >
+                                    <X size={24} />
+                                </button>
+                            </div>
+
+                            {/* Shoot Details */}
+                            <div className="space-y-6">
+                                {/* Date & Time Section */}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div className="p-4 bg-orange-50 rounded-lg border-l-4 border-primary-orange">
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <Calendar size={18} className="text-primary-orange" />
+                                            <p className="text-xs font-semibold text-primary-orange uppercase">Shoot Date</p>
+                                        </div>
+                                        <p className="text-lg font-semibold text-deep-black">
+                                            {new Date(selectedShoot.shootDate).toLocaleDateString('en-US', {
+                                                weekday: 'long',
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric'
+                                            })}
+                                        </p>
+                                    </div>
+                                    <div className="p-4 bg-orange-50 rounded-lg border-l-4 border-primary-orange">
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <Clock size={18} className="text-primary-orange" />
+                                            <p className="text-xs font-semibold text-primary-orange uppercase">Shoot Time</p>
+                                        </div>
+                                        <p className="text-lg font-semibold text-deep-black">{selectedShoot.shootTime}</p>
+                                    </div>
+                                </div>
+
+                                {/* Location */}
+                                <div className="p-4 bg-gray-50 rounded-lg">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <MapPin size={18} className="text-gray-600" />
+                                        <p className="text-xs font-semibold text-gray-600 uppercase">Location</p>
+                                    </div>
+                                    <p className="text-base text-deep-black font-medium">{selectedShoot.location}</p>
+                                </div>
+
+                                {/* Notes */}
+                                {selectedShoot.notes && (
+                                    <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
+                                        <p className="text-xs text-primary-orange font-semibold mb-2 uppercase">Important Notes</p>
+                                        <p className="text-sm text-gray-700 leading-relaxed">{selectedShoot.notes}</p>
+                                    </div>
+                                )}
+
+                                {/* Action Buttons */}
+                                <div className="flex gap-3 pt-4 border-t border-gray-200">
+                                    <Button
+                                        variant={completedShoots.has(selectedShoot.id) ? "outline" : "primary"}
+                                        className="flex-1"
+                                        onClick={() => {
+                                            handleMarkShootComplete(selectedShoot.id);
+                                            closeShootModal();
+                                        }}
+                                        disabled={completedShoots.has(selectedShoot.id)}
+                                    >
+                                        {completedShoots.has(selectedShoot.id) ? 'Done' : 'Mark as Completed'}
+                                    </Button>
+                                    <Button
+                                        variant="outline"
+                                        className="flex-1"
+                                        onClick={closeShootModal}
+                                    >
+                                        Close
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+                </div>,
+                document.body
             )}
         </div>
     );

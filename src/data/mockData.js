@@ -175,7 +175,7 @@ export const MOCK_INFLUENCER_DATA = {
             createdDate: '2025-11-25'
         },
 
-        // Dec 4, 2025
+        // Dec 4, 2025 (Today - Multiple shoots for demo)
         {
             id: 8,
             brandName: 'Wanderlust Travel',
@@ -199,6 +199,54 @@ export const MOCK_INFLUENCER_DATA = {
             status: 'confirmed',
             notes: 'Bring yoga mat',
             createdDate: '2025-11-27'
+        },
+        {
+            id: 11,
+            brandName: 'Fresh Bites Co',
+            brandLogo: null,
+            campaign: 'Healthy Snack Launch',
+            shootDate: '2025-12-04',
+            shootTime: '11:00 AM - 12:30 PM',
+            location: 'Kitchen Studio, Culver City',
+            status: 'confirmed',
+            notes: 'Food photography session, 5 different products',
+            createdDate: '2025-11-28'
+        },
+        {
+            id: 12,
+            brandName: 'StyleHub Fashion',
+            brandLogo: null,
+            campaign: 'Winter Collection 2025',
+            shootDate: '2025-12-04',
+            shootTime: '1:00 PM - 2:30 PM',
+            location: 'Studio C, Beverly Hills',
+            status: 'pending',
+            notes: 'Winter outfit styling, 8 looks total',
+            createdDate: '2025-11-29'
+        },
+        {
+            id: 13,
+            brandName: 'TechInnovate',
+            brandLogo: null,
+            campaign: 'Smart Home Devices Review',
+            shootDate: '2025-12-04',
+            shootTime: '5:00 PM - 6:00 PM',
+            location: 'Home Studio',
+            status: 'confirmed',
+            notes: 'Product unboxing and demo videos',
+            createdDate: '2025-11-30'
+        },
+        {
+            id: 14,
+            brandName: 'Glow Cosmetics',
+            brandLogo: null,
+            campaign: 'Holiday Makeup Collection',
+            shootDate: '2025-12-04',
+            shootTime: '6:30 PM - 8:00 PM',
+            location: 'Beauty Studio, West LA',
+            status: 'confirmed',
+            notes: 'Glam makeup looks for holiday season',
+            createdDate: '2025-12-01'
         },
 
         // Past booking
@@ -372,6 +420,79 @@ export const MOCK_INFLUENCER_DATA = {
             status: 'pending',
             notes: 'Use trending audio',
             shootDate: '2025-12-02'
+        },
+        // Dec 4, 2025 - Today's uploads for demo
+        {
+            id: 13,
+            brandName: 'Wanderlust Travel',
+            campaign: 'Adventure Gear Collection',
+            platform: 'Instagram',
+            uploadDate: '2025-12-04',
+            uploadTime: '10:30 AM',
+            contentType: 'Reel',
+            status: 'pending',
+            notes: 'Upload sunrise beach footage, use #AdventureAwaits',
+            shootDate: '2025-12-04'
+        },
+        {
+            id: 14,
+            brandName: 'Fresh Bites Co',
+            campaign: 'Healthy Snack Launch',
+            platform: 'Instagram',
+            uploadDate: '2025-12-04',
+            uploadTime: '2:00 PM',
+            contentType: 'Carousel Post',
+            status: 'pending',
+            notes: 'Show all 5 products, tag @freshbitesco',
+            shootDate: '2025-12-04'
+        },
+        {
+            id: 15,
+            brandName: 'Zen Wellness',
+            campaign: 'Yoga Apparel Line',
+            platform: 'YouTube',
+            uploadDate: '2025-12-04',
+            uploadTime: '5:00 PM',
+            contentType: 'Short',
+            status: 'pending',
+            notes: 'Upload yoga flow demonstration',
+            shootDate: '2025-12-04'
+        },
+        {
+            id: 16,
+            brandName: 'TechInnovate',
+            campaign: 'Smart Home Devices Review',
+            platform: 'TikTok',
+            uploadDate: '2025-12-04',
+            uploadTime: '7:00 PM',
+            contentType: 'Video',
+            status: 'pending',
+            notes: 'Unboxing and quick review, trending sound',
+            shootDate: '2025-12-04'
+        },
+        {
+            id: 17,
+            brandName: 'Glow Cosmetics',
+            campaign: 'Holiday Makeup Collection',
+            platform: 'Instagram',
+            uploadDate: '2025-12-04',
+            uploadTime: '8:30 PM',
+            contentType: 'Reel + Story',
+            status: 'pending',
+            notes: 'Makeup tutorial with product tags',
+            shootDate: '2025-12-04'
+        },
+        {
+            id: 18,
+            brandName: 'StyleHub Fashion',
+            campaign: 'Winter Collection 2025',
+            platform: 'Instagram',
+            uploadDate: '2025-12-04',
+            uploadTime: '4:00 PM',
+            contentType: 'Post',
+            status: 'uploaded',
+            notes: 'Winter lookbook posted successfully',
+            shootDate: '2025-12-04'
         },
         // Dec 5, 2025 - Upload only (no shoot)
         {
