@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import PublicLayout from './layouts/PublicLayout';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/auth/LoginPage';
@@ -13,7 +13,6 @@ import ClosedDeals from './pages/brand/ClosedDeals';
 import ActiveDeals from './pages/brand/ActiveDeals';
 import Messages from './pages/brand/Messages';
 import InfluencerLayout from './layouts/InfluencerLayout';
-import InfluencerDashboard from './pages/influencer/InfluencerDashboard';
 import InfluencerProfilePage from './pages/influencer/InfluencerProfile';
 import ShootingCalendar from './pages/influencer/ShootingCalendar';
 import Schedule from './pages/influencer/Schedule';
@@ -56,7 +55,7 @@ function App() {
 
                 {/* Influencer Routes */}
                 <Route path="/influencer" element={<InfluencerLayout />}>
-                    <Route index element={<InfluencerDashboard />} />
+                    <Route index element={<Navigate to="/influencer/profile" replace />} />
                     <Route path="profile" element={<InfluencerProfilePage />} />
                     <Route path="calendar" element={<ShootingCalendar />} />
                     <Route path="schedule" element={<Schedule />} />
